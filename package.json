@@ -5,14 +5,14 @@
   "main": "server.js",
   "scripts": {
     "build": "gulp",
-    "postinstall": "gulp default",
+    "heroku-postbuild": "gulp default",
     "prestart": "npm run build",
     "start": "node server"
   },
   "keywords": [],
   "author": "olivmonnier",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "babel-preset-es2015": "^6.24.1",
     "babelify": "^7.3.0",
     "bluebird": "^3.5.0",
