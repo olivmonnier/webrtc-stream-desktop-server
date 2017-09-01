@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "gulp",
-    "heroku-postbuild": "npm run build",
+    "postinstall": "gulp default",
     "prestart": "npm run build",
     "start": "node server"
   },
