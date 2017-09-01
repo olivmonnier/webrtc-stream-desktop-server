@@ -6605,7 +6605,7 @@ function onCreateOfferSuccess(pc, description, signal) {
   console.log('got description');
 
   pc.setLocalDescription(description).then(function () {
-    pc.localDescription.sdp = setMediaBitrates(pc.localDescription.sdp);
+    //pc.localDescription.sdp = setMediaBitrates(pc.localDescription.sdp);
     signal();
   }).catch(errorHandler);
 }
