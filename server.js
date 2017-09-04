@@ -37,6 +37,6 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => console.log('Client disconnected'));
 
   socket.on('message', (message) => {
-    socket.broadcast.to(socket.id).emit('message', message);
+    socket.broadcast.to(params.room || socket.id).emit('message', message);
   });
 });
