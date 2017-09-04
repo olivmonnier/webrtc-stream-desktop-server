@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
     socket.join(params.room);
     socket.broadcast.to(params.room).emit('newUser');
   } else {
-    socket.join(socket.id);
+    //socket.join(socket.id);
   }
 
   console.log('Client connected');
