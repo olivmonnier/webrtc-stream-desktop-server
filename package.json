@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "build": "gulp",
-    "heroku-postbuild": "gulp default",
-    "prestart": "npm run build",
+    "heroku-postbuild": "gulp",
+    "prestart": "gulp",
     "start": "node server"
   },
   "keywords": [],

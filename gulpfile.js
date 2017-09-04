@@ -3,12 +3,7 @@ const browserify = require('browserify');
 const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 
-gulp.task('move:js', () => {
-  return gulp.src(['../utils/**/*'])
-    .pipe(gulp.dest('./utils/'));
-});
-
-gulp.task('babelify', ['move:js'], () => {
+gulp.task('babelify', () => {
   return browserify('./public/js/main.js')
     .transform(babelify, { presets: ['es2015'] })
     .bundle()
