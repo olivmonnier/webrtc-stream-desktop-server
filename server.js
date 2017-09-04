@@ -30,6 +30,7 @@ io.on('connection', (socket) => {
     socket.broadcast.to(params.room).emit('newUser');
   } else {
     socket.join(socket.id);
+    socket.to(socket.id).emit('message', 'Room: ' + socket.id + ' created')
   }
 
   console.log('Client connected');
