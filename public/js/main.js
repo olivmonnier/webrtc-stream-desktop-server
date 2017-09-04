@@ -41,6 +41,12 @@ function start() {
   peerConnection = new RTCPeerConnection(peerConnectionConfig);
   peerConnection.onaddstream = gotRemoteStream;
   peerConnection.onicecandidate = onIceCandidate;
+  peerConnection.onconnectionstatechange = function (event) {
+    console.log(event, peerConnection.connectionState)
+  }
+  peerConnection.oniceconnectionstatechange = function (event) {
+    console.log(event, peerConnection.iceConnectionState)
+  }
 }
 
 function onIceCandidate(event) {
