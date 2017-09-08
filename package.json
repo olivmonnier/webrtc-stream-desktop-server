@@ -20,6 +20,8 @@
     "express": "^4.15.4",
     "gulp": "^3.9.1",
     "pug": "^2.0.0-rc.3",
+    "signal-master": "^1.0.1",
+    "simplewebrtc": "^3.0.1",
     "socket.io": "^2.0.3",
     "vinyl-source-stream": "^1.1.0"
   },

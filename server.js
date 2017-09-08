@@ -3,6 +3,8 @@
 const express = require('express');
 const socketIO = require('socket.io');
 const path = require('path');
+const sockets = require('signal-master/sockets');
+const config = require('./config.json');
 
 const PORT = process.env.PORT || 5600;
 
@@ -16,27 +18,8 @@ app.get('/', function (req, res) {
   res.render('index');
 });
 
-const io = socketIO(server);
-
 server.listen(PORT, function () {
   console.log('[server] listening at port %d', PORT);
 });
 
-io.on('connection', (socket) => {
-  const params = socket.handshake.query;
-
-  if(params.room) {
-    socket.join(params.room);
-    socket.broadcast.to(params.room).emit('newUser');
-  } else {
-    socket.join(socket.id);
-    socket.to(socket.id).emit('message', 'Room: ' + socket.id + ' created')
-  }
-
-  console.log('Client connected');
-  socket.on('disconnect', () => console.log('Client disconnected'));
-
-  socket.on('message', (message) => {
-    socket.broadcast.to(params.room || socket.id).emit('message', message);
-  });
-});
+sockets(server, config);
