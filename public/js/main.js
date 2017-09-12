@@ -6,6 +6,7 @@ const webrtc = new SimpleWebRTC({
   url: window.location.protocol + "//" + window.location.host,
   socketio: io,
   debug: true,
+  autoRemoveVideos: true,
   remoteVideosEl: 'remoteVideos'
 });
 const room = getQueryStringValue('room');
