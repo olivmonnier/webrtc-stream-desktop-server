@@ -8320,7 +8320,9 @@ function onMessage(data) {
   console.log('data', data);
 
   if (data === 'ready') {
-    if (peer) return;
+    if (peer) {
+      peer.destroy();
+    }
     peer = new __WEBPACK_IMPORTED_MODULE_1_simple_peer___default.a();
     peer.on('signal', function (signal) {
       socket.emit('message', JSON.stringify(signal));
@@ -8330,6 +8332,7 @@ function onMessage(data) {
       video.src = window.URL.createObjectURL(stream);
       video.play();
     });
+    peer.on('close', () => peer.destroy());
   } else {
     peer.signal(JSON.parse(data));
   }
