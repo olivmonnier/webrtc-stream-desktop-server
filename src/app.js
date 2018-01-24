@@ -27,7 +27,9 @@ function onMessage(data) {
     })
     peer.on('close', () => peer.destroy())
   } else {
-    console.log('peer', peer)
+    if (!peer.connected) {
+      peer = new Peer()
+    }
     peer.signal(JSON.parse(data))
   }
 }
