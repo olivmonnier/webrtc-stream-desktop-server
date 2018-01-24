@@ -9,8 +9,7 @@ const PORT = process.env.PORT || 5600;
 
 const app = express();
 const server = require('http').createServer(app);
-const io = socketIO(server)
-const sockets = []
+const io = socketIO.listen(server)
 
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'pug');
@@ -23,20 +22,22 @@ server.listen(PORT, function () {
   console.log('[server] listening at port %d', PORT);
 });
 
-io.on('connection', function(socket) {
-  sockets.push(socket)
-  socket.on('message', onMessage)
+io.sockets.on('connection', function(socket) {
+  let token = socket.handshake.query.token || socket.id
+
+  socket.join(token)
+
+  socket.on('message', (data) => {
+    socket.broadcast.to(token).emit('message', data)
+  })
   socket.on('disconnect', function() {
-    sockets.splice(sockets.indexOf(socket), 1)
+    socket.leave(token)
   })
 
-  function onMessage(data) {
-    sockets
-      .filter(s => s !== socket)
-      .forEach(socket => socket.emit('message', data))
-  }
-
-  if (sockets.length === 2) {
-    sockets.forEach(socket => socket.emit('message', 'ready'))
-  }
+  io.of(token).clients((error, clients) => {
+    if (error) throw error
+    if (clients.length >= 2) {
+      io.of(token).emit('message', 'ready')
+    }
+  })
 })
