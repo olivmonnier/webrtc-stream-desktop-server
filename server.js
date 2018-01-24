@@ -26,7 +26,7 @@ server.listen(PORT, function () {
 io.on('connection', function(socket) {
   sockets.push(socket)
   socket.on('message', onMessage)
-  socket.on('close', function() {
+  socket.on('disconnect', function() {
     sockets.splice(sockets.indexOf(socket), 1)
   })
 
