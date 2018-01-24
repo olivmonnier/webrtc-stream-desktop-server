@@ -6,6 +6,7 @@ const socket = io(wsServer)
 
 console.log(wsServer)
 
+socket.on('connect', () => console.log('connect', socket))
 socket.on('message', onMessage)
 
 function onMessage(data) {

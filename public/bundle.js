@@ -8313,6 +8313,7 @@ const socket = __WEBPACK_IMPORTED_MODULE_0_socket_io_client___default()(wsServer
 
 console.log(wsServer);
 
+socket.on('connect', () => console.log('connect', socket));
 socket.on('message', onMessage);
 
 function onMessage(data) {
