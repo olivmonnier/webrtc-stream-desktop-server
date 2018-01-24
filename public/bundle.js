@@ -8321,6 +8321,11 @@ function onMessage(data) {
     peer.on('signal', function (signal) {
       socket.emit('message', JSON.stringify(signal));
     });
+    peer.on('stream', function (stream) {
+      const video = document.querySelector('#remoteVideos');
+      video.src = window.URL.createObjectURL(stream);
+      video.play();
+    });
   } else {
     peer.signal(JSON.parse(data));
   }
