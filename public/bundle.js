@@ -8308,7 +8308,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 let peer;
-const socket = __WEBPACK_IMPORTED_MODULE_0_socket_io_client___default()(window.location.origin);
+const wsServer = window.location.origin + '/' + window.location.search;
+const socket = __WEBPACK_IMPORTED_MODULE_0_socket_io_client___default()(wsServer);
 
 socket.on('message', onMessage);
 

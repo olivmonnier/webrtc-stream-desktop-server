@@ -1,7 +1,8 @@
 import io from 'socket.io-client'
 import Peer from 'simple-peer'
 let peer
-const socket = io(window.location.origin)
+const wsServer = window.location.origin + '/' + window.location.search
+const socket = io(wsServer)
 
 socket.on('message', onMessage)
 
