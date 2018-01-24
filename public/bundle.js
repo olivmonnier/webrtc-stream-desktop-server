@@ -8311,6 +8311,8 @@ let peer;
 const wsServer = window.location.origin + '/' + window.location.search;
 const socket = __WEBPACK_IMPORTED_MODULE_0_socket_io_client___default()(wsServer);
 
+console.log(wsServer);
+
 socket.on('message', onMessage);
 
 function onMessage(data) {
