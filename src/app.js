@@ -4,6 +4,8 @@ let peer
 const wsServer = window.location.origin + '/' + window.location.search
 const socket = io(wsServer)
 
+console.log(wsServer)
+
 socket.on('message', onMessage)
 
 function onMessage(data) {
