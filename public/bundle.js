@@ -8334,9 +8334,6 @@ function onMessage(data) {
     });
     peer.on('close', () => peer.destroy());
   } else {
-    if (!peer.connected) {
-      peer = new __WEBPACK_IMPORTED_MODULE_1_simple_peer___default.a();
-    }
     peer.signal(JSON.parse(data));
   }
 }
