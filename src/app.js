@@ -12,13 +12,18 @@ socket.on('message', onMessage)
 function onMessage(data) {
   console.log('data', data)
 
-  if (data === 'ready') {
+  const { state, signal } = JSON.parse(data)
+
+  if (state === 'ready') {
     if(peer) {
       peer.destroy()
     }
     peer = new Peer()
     peer.on('signal', function(signal) {
-      socket.emit('message', JSON.stringify(signal))
+      socket.emit('message', JSON.stringify({
+        state: 'connect',
+        signal
+      }))
     })
     peer.on('stream', function(stream) {
       const video = document.querySelector('#remoteVideos')
@@ -26,7 +31,7 @@ function onMessage(data) {
       video.play()
     })
     peer.on('close', () => peer.destroy())
-  } else {
-    peer.signal(JSON.parse(data))
+  } else if (state === 'connect') {
+    peer.signal(signal)
   }
 }

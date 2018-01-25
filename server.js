@@ -38,7 +38,9 @@ io.sockets.on('connection', function(socket) {
     if (error) throw error
 
     if (clients.length === 2) {
-      io.in(token).emit('message', 'ready')
+      io.in(token).emit('message', JSON.stringify({
+        state: 'ready'
+      }))
     }
   })
 })
