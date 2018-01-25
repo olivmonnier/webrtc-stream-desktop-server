@@ -37,7 +37,7 @@ io.sockets.on('connection', function(socket) {
   io.in(token).clients((error, clients) => {
     if (error) throw error
 
-    if (clients.length >= 2) {
+    if (clients.length === 2) {
       io.in(token).emit('message', 'ready')
     }
   })
