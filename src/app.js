@@ -19,19 +19,29 @@ function onMessage(data) {
       peer.destroy()
     }
     peer = new Peer()
-    peer.on('signal', function(signal) {
-      socket.emit('message', JSON.stringify({
-        state: 'connect',
-        signal
-      }))
-    })
-    peer.on('stream', function(stream) {
-      const video = document.querySelector('#remoteVideos')
-      video.src = window.URL.createObjectURL(stream)
-      video.play()
-    })
-    peer.on('close', () => peer.destroy())
-  } else if (state === 'connect') {
+    handlerPeer(peer, socket)
+  } 
+  else if (state === 'connect') {
+    peer.signal(signal)
+  } 
+  else if (state === 'renew') {
+    peer = new Peer()
+    handlerPeer(peer, socket)
     peer.signal(signal)
   }
+}
+
+function handlerPeer(peer, socket) {
+  peer.on('signal', function (signal) {
+    socket.emit('message', JSON.stringify({
+      state: 'connect',
+      signal
+    }))
+  })
+  peer.on('stream', function (stream) {
+    const video = document.querySelector('#remoteVideos')
+    video.src = window.URL.createObjectURL(stream)
+    video.play()
+  })
+  peer.on('close', () => peer.destroy())
 }

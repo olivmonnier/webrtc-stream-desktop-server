@@ -8326,21 +8326,29 @@ function onMessage(data) {
       peer.destroy();
     }
     peer = new __WEBPACK_IMPORTED_MODULE_1_simple_peer___default.a();
-    peer.on('signal', function (signal) {
-      socket.emit('message', JSON.stringify({
-        state: 'connect',
-        signal
-      }));
-    });
-    peer.on('stream', function (stream) {
-      const video = document.querySelector('#remoteVideos');
-      video.src = window.URL.createObjectURL(stream);
-      video.play();
-    });
-    peer.on('close', () => peer.destroy());
+    handlerPeer(peer, socket);
   } else if (state === 'connect') {
     peer.signal(signal);
+  } else if (state === 'renew') {
+    peer = new __WEBPACK_IMPORTED_MODULE_1_simple_peer___default.a();
+    handlerPeer(peer, socket);
+    peer.signal(signal);
   }
+}
+
+function handlerPeer(peer, socket) {
+  peer.on('signal', function (signal) {
+    socket.emit('message', JSON.stringify({
+      state: 'connect',
+      signal
+    }));
+  });
+  peer.on('stream', function (stream) {
+    const video = document.querySelector('#remoteVideos');
+    video.src = window.URL.createObjectURL(stream);
+    video.play();
+  });
+  peer.on('close', () => peer.destroy());
 }
 
 /***/ }),
