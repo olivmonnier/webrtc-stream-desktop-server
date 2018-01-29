@@ -15,14 +15,14 @@ function onMessage(data) {
   const { state, signal } = JSON.parse(data)
 
   if (state === 'ready') {
-    if(!peer.destroyed) {
+    if(peer && !peer.destroyed) {
       peer.destroy()
     }
     peer = new Peer()
     handlerPeer(peer, socket)
   } 
   else if (state === 'connect') {
-    if (peer.destroyed) {
+    if (peer && peer.destroyed) {
       peer = new Peer()
       handlerPeer(peer, socket)
     }
