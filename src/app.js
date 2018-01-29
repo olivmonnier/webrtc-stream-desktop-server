@@ -15,14 +15,14 @@ function onMessage(data) {
   const { state, signal } = JSON.parse(data)
 
   if (state === 'ready') {
-    if(peer) {
+    if(!peer.destroyed) {
       peer.destroy()
     }
     peer = new Peer()
     handlerPeer(peer, socket)
   } 
   else if (state === 'connect') {
-    if (!peer) {
+    if (peer.destroyed) {
       peer = new Peer()
       handlerPeer(peer, socket)
     }
@@ -44,6 +44,5 @@ function handlerPeer(peer, socket) {
   })
   peer.on('close', () => {
     peer.destroy()
-    peer = null
   })
 }
