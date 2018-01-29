@@ -8328,10 +8328,10 @@ function onMessage(data) {
     peer = new __WEBPACK_IMPORTED_MODULE_1_simple_peer___default.a();
     handlerPeer(peer, socket);
   } else if (state === 'connect') {
-    peer.signal(signal);
-  } else if (state === 'renew') {
-    peer = new __WEBPACK_IMPORTED_MODULE_1_simple_peer___default.a();
-    handlerPeer(peer, socket);
+    if (!peer) {
+      peer = new __WEBPACK_IMPORTED_MODULE_1_simple_peer___default.a();
+      handlerPeer(peer, socket);
+    }
     peer.signal(signal);
   }
 }
@@ -8348,7 +8348,10 @@ function handlerPeer(peer, socket) {
     video.src = window.URL.createObjectURL(stream);
     video.play();
   });
-  peer.on('close', () => peer.destroy());
+  peer.on('close', () => {
+    peer.destroy();
+    peer = null;
+  });
 }
 
 /***/ }),

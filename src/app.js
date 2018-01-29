@@ -22,13 +22,12 @@ function onMessage(data) {
     handlerPeer(peer, socket)
   } 
   else if (state === 'connect') {
+    if (!peer) {
+      peer = new Peer()
+      handlerPeer(peer, socket)
+    }
     peer.signal(signal)
   } 
-  else if (state === 'renew') {
-    peer = new Peer()
-    handlerPeer(peer, socket)
-    peer.signal(signal)
-  }
 }
 
 function handlerPeer(peer, socket) {
@@ -43,5 +42,8 @@ function handlerPeer(peer, socket) {
     video.src = window.URL.createObjectURL(stream)
     video.play()
   })
-  peer.on('close', () => peer.destroy())
+  peer.on('close', () => {
+    peer.destroy()
+    peer = null
+  })
 }
